@@ -24,6 +24,7 @@ jobs:
           prerelease: false
 
   build:
+    needs: create_release
     strategy:
       matrix:
         os:
