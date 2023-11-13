@@ -172,7 +172,7 @@ fn send_notification(
     let default_api_url = "https://api.pushover.net";
     let api_url = config.api_url.as_deref().unwrap_or(default_api_url);
 
-    let api = API::new().base_url(&api_url);
+    let api = API::new().base_url(api_url);
 
     let message_text = format!(
         "Command: {}\nFinished with exit code: {}\nExecution time: {:.2?}",
@@ -180,7 +180,7 @@ fn send_notification(
         status.code().unwrap_or(-1),
         duration
     );
-    let message = SendMessage::new(&config.token, &config.user, &message_text);
+    let message = SendMessage::new(&config.token, &config.user, message_text);
     let response = api.send(&message);
     response.map_err(|e| format!("Failed to send notification: {:?}", e))
 }
