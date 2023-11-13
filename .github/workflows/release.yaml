@@ -52,13 +52,13 @@ jobs:
         run: |
           if [ "${{ matrix.os }}" = "windows-latest" ]; then
             echo "BINARY_PATH=./target/release/pushtime.exe" >> $GITHUB_ENV
-            echo "BINARY_NAME=pushtime-${{ github.ref }}-win.exe" >> $GITHUB_ENV
+            echo "BINARY_NAME=pushtime-${{ github.ref_name }}-win.exe" >> $GITHUB_ENV
           elif [ "${{ matrix.os }}" = "macos-latest" ]; then
             echo "BINARY_PATH=./target/release/pushtime" >> $GITHUB_ENV
-            echo "BINARY_NAME=pushtime-${{ github.ref }}-mac" >> $GITHUB_ENV
+            echo "BINARY_NAME=pushtime-${{ github.ref_name }}-mac" >> $GITHUB_ENV
           else
             echo "BINARY_PATH=./target/release/pushtime" >> $GITHUB_ENV
-            echo "BINARY_NAME=pushtime-${{ github.ref }}-linux" >> $GITHUB_ENV
+            echo "BINARY_NAME=pushtime-${{ github.ref_name }}-linux" >> $GITHUB_ENV
           fi
 
       - name: Upload Release Asset
