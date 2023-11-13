@@ -7,8 +7,14 @@ on:
 
 jobs:
   build:
-    name: Build and Release
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+    name: Build and Release for ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout code
@@ -22,6 +28,13 @@ jobs:
 
       - name: Build Release
         run: cargo build --release
+
+      - name: Rename binary
+        run: |
+          echo "BINARY_PATH=./target/release/pushtime" >> $GITHUB_ENV
+          if [ "${{ matrix.os }}" = "windows-latest" ]; then
+            echo "BINARY_PATH=./target/release/pushtime.exe" >> $GITHUB_ENV
+          fi
 
       - name: Create Release
         id: create_release
@@ -40,6 +53,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./target/release/pushtime
-          asset_name: pushtime
+          asset_path: ${{ env.BINARY_PATH }}
+          asset_name: pushtime-${{ matrix.os }}
           asset_content_type: application/octet-stream
