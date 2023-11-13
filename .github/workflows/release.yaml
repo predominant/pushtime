@@ -40,6 +40,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./target/release/your_binary_name
-          asset_name: your_binary_name
+          asset_path: ./target/release/pushtime
+          asset_name: pushtime
           asset_content_type: application/octet-stream
